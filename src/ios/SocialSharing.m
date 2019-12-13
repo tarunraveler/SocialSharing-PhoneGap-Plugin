@@ -6,7 +6,6 @@
 #import <MessageUI/MFMessageComposeViewController.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-#import <Photos/Photos.h>
 
 static NSString *const kShareOptionMessage = @"message";
 static NSString *const kShareOptionSubject = @"subject";
@@ -711,19 +710,6 @@ static NSString *const kShareOptionIPadCoordinates = @"iPadCoordinates";
       if (image != nil) {
         shared = true;
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(thisImage:wasSavedToPhotoAlbumWithError:contextInfo:), nil);
-      } else {
-        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-             PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(filename)
-         }) { saved, error in
-             if saved {
-                 shared = true;
-                 let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .Alert) 
-                 let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                 alertController.addAction(defaultAction)
-                 self.presentViewController(alertController, animated: true, completion: nil)
-             }
-         }
-
       }
     }
     if (!shared) {
