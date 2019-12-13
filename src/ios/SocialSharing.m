@@ -127,6 +127,7 @@ static NSString *const kShareOptionIPadCoordinates = @"iPadCoordinates";
 
     UIActivity *activity = [[UIActivity alloc] init];
     NSArray *applicationActivities = [[NSArray alloc] initWithObjects:activity, nil];
+    NSLog(@"%@", applicationActivities);
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     if (subject != (id)[NSNull null] && subject != nil) {
       [activityVC setValue:subject forKey:@"subject"];
