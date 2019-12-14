@@ -126,7 +126,7 @@ static NSString *const kShareOptionIPadCoordinates = @"iPadCoordinates";
     }
 
     UIActivity *activity = [[UIActivity alloc] init];
-    NSArray *applicationActivities = [[NSArray alloc] initWithObjects:activity, nil];
+    NSArray *applicationActivities = [[NSArray alloc] initWithObjects:@"0"];
     NSLog(@"THIS LOG WAS WRITTEN BY TARAN!");
     NSLog(@"%@", applicationActivities);
     NSLog(@"THIS LOG WAS WRITTEN BY TARAN!");
