@@ -6,6 +6,7 @@
 #import <MessageUI/MFMessageComposeViewController.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <Photos/Photos.h>
 
 static NSString *const kShareOptionMessage = @"message";
 static NSString *const kShareOptionSubject = @"subject";
@@ -126,10 +127,7 @@ static NSString *const kShareOptionIPadCoordinates = @"iPadCoordinates";
     }
 
     UIActivity *activity = [[UIActivity alloc] init];
-    NSArray *applicationActivities = [[NSArray alloc] initWithObjects:@"0"];
-    NSLog(@"THIS LOG WAS WRITTEN BY TARAN!");
-    NSLog(@"%@", applicationActivities);
-    NSLog(@"THIS LOG WAS WRITTEN BY TARAN!");
+    NSArray *applicationActivities = [[NSArray alloc] initWithObjects:activity, nil];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:applicationActivities];
     if (subject != (id)[NSNull null] && subject != nil) {
       [activityVC setValue:subject forKey:@"subject"];
@@ -701,6 +699,26 @@ static NSString *const kShareOptionIPadCoordinates = @"iPadCoordinates";
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
   }
+}
+
+- (void)saveVideo:(CDVInvokedUrlCommand*)command {
+  self.command = command;
+  NSString* urlString = [command.arguments objectAtIndex:0];
+  [self.commandDelegate runInBackground:^{
+    NSURL *url = [NSURL URLWithString:[urlString SSURLEncodedString]];
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL: url];
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (success) {
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:success]
+            callbackId:command.callbackId];
+        } else {
+            NSDictionary * result = @{@"completed":@(success)};
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result]
+                                        callbackId:command.callbackId];
+        }
+    }];
+  }];
 }
 
 - (void)saveToPhotoAlbum:(CDVInvokedUrlCommand*)command {

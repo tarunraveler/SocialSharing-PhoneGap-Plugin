@@ -34,6 +34,7 @@ declare class SocialSharing {
 	shareViaInstagram: (message?: string, fileOrFileArray?: string | ArrayLike<string>, successCallback?: SocialSharingSuccessCallback<never>, errorCallback?: SocialSharingErrorCallback) => void
 	shareVia: (via: string, message?: string, subject?: string, fileOrFileArray?: string | ArrayLike<string>, url?: string, successCallback?: SocialSharingSuccessCallback<boolean>, errorCallback?: SocialSharingErrorCallback) => void
 	saveToPhotoAlbum: (fileOrFileArray?: string | ArrayLike<string>, successCallback?: SocialSharingSuccessCallback<never>, errorCallback?: SocialSharingErrorCallback) => void
+	saveVideo: (url?: string, successCallback?: SocialSharingSuccessCallback<never>, errorCallback?: SocialSharingErrorCallback) => void
 }
 
 type SocialSharingW3C = (shareData: SocialSharingW3CData) => Promise<SocialSharingResult>

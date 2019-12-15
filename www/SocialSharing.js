@@ -119,6 +119,10 @@ SocialSharing.prototype.saveToPhotoAlbum = function (fileOrFileArray, successCal
   cordova.exec(successCallback, this._getErrorCallback(errorCallback, "saveToPhotoAlbum"), "SocialSharing", "saveToPhotoAlbum", [this._asArray(fileOrFileArray)]);
 };
 
+SocialSharing.prototype.saveVideo = function (url, successCallback, errorCallback) {
+  cordova.exec(successCallback, this._getErrorCallback(errorCallback, "saveVideo"), "SocialSharing", "saveVideo", [url]);
+};
+
 SocialSharing.prototype._asArray = function (param) {
   if (param == null) {
     param = [];
